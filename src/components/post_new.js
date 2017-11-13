@@ -7,18 +7,6 @@ import { Field, reduxForm } from 'redux-form';
 
 class PostsNew extends Component{
 
-     renderTitleField(field) {
-    return (
-        <div className="form-group">
-            <label>Title</label>
-            <input
-                className="form-control"
-                type="text"
-                {...field.input}
-            />
-        </div>
-    );
-     }
 
     renderField(field) {
         return (
@@ -29,21 +17,29 @@ class PostsNew extends Component{
                     type="text"
                     {...field.input}
                 />
+                {field.meta.error}
             </div>
         );
     }
 
+     onSubmit(values){
+    console.log(values);
+    }
+
     render(){
+
+        const { handleSubmit } = this.props;
+
         return (
-   <form>
+   <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
        <Field
            label="Title"
            name="title"
               component={this.renderField}
        />
        <Field
-           label="Tags"
-           name="tags"
+           label="Categories"
+           name="categories"
               component={this.renderField}
        />
        <Field
@@ -51,11 +47,32 @@ class PostsNew extends Component{
            name="content"
            component={this.renderField}
        />
+       <button type="submit" className="btn btn-primary">Submit</button>
    </form>
         );
     }
 }
 
+function  validate(values) {
+
+    const errors = {};
+
+    //validate the values
+    if(!values.title){
+        errors.title = "Enter a title";
+    }
+    if(!values.categories){
+        errors.categories = "Enter some categories";
+    }
+    if(!values.content){
+        errors.content = "Enter some content";
+    }
+// return the error for the field
+    return errors;
+
+}
+
 export default reduxForm({
+    validate,
     form: 'PostsNewForm'
 })(PostsNew);
