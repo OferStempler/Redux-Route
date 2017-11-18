@@ -8,6 +8,7 @@ import { fetchPosts } from "../actions";
 import { connect } from 'react-redux';
 import _ from "lodash";
 
+
 class  PostsIndex extends Component {
 
     componentDidMount() {
@@ -19,6 +20,7 @@ class  PostsIndex extends Component {
                <li className="list-group-item" key={post.id}>
                    {post.title}
                </li>
+
            )
         });
     }
